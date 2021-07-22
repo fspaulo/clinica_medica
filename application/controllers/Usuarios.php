@@ -26,7 +26,7 @@ class Usuarios extends CI_Controller
 	 * Abre página para Editar um item
 	 * */
 	public function editar($id){
-		$dados['especialidade'] = $this->usuario_model->id_editar($id);
+		$dados['user'] = $this->usuario_model->id_editar($id);
 		$dados['titulo'] = 'Editar Usuário';
 
 		$this->load->view('header', $dados);
@@ -37,11 +37,11 @@ class Usuarios extends CI_Controller
 	/**
 	 * Chama model pra ATUALIZAR no banco o item
 	 * */
-	public function update($id)
+	public function update()
 	{
 		$update_item = $_POST;
 
-		$this->usuario_model->atualizar($id, $update_item);
+		$this->usuario_model->atualizar($update_item);
 		redirect("usuarios"); // todo
 	}
 

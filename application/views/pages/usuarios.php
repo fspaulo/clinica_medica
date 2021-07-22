@@ -27,11 +27,11 @@
 					<td><?= $user['usuario'] ?></td>
 					<td><?= $user['senha'] ?></td>
 					<td>
-						<a href="<?php base_url() ?>especialidades/editar/<?= $user['id'] ?>"
+						<a href="<?php base_url() ?>usuarios/editar/<?= $user['id'] ?>"
 						   class="btn btn-sm btn-warning">
 							<i class="bi bi-pencil-square"></i>
 						</a>
-						<a href="<?php base_url() ?>especialidades/deletar/<?= $user['id'] ?>"
+						<a href="<?php base_url() ?>usuarios/deletar/<?= $user['id'] ?>"
 						   class="btn btn-sm btn-danger">
 							<i class="bi bi-trash"></i>
 						</a>
