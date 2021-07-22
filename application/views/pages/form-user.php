@@ -3,7 +3,7 @@
 		<div class="col mb-5">
 			<div class="card">
 				<?php if (isset($especialidade)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->
-					<form action="<?php base_url() ?>update/<?= $especialidade['id'] ?>" method="post" class="row g-3 m-lg-2">
+					<form action="<?php base_url() ?>update/<?= $especialidade['id'] ?>" method="post" class="row g-3 m-lg-2"><!-- <=//php base_url() ?>especialidades/salvar-->
       			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
 					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2"><!-- <=//php base_url() ?>especialidades/salvar-->
 				<?php endif; ?>
@@ -18,7 +18,7 @@
 						</div>
 						<div class="col-12">
 							<button type="submit" class="btn btn-success">Confirmar</button>
-							<a href="<?php base_url() ?>/ci/especialidades" class="btn btn-danger">Cancel</a>
+							<a href="<?php base_url() ?>/ci/usuarios" class="btn btn-danger">Cancel</a>
 						</div>
 					</form>
 			</div>

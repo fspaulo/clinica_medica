@@ -5,6 +5,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 /** Usado para Login / Cadastro de usuario  */
 class Usuario_model extends CI_Model
 {
+	/**
+	 * Busca resgistros no banco
+	 */
+	public function index()
+	{
+		return $this->db->get("login")->result_array();
+	}
 
 	/**
 	 * Insert no banco
