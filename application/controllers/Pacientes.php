@@ -6,29 +6,73 @@ class Pacientes extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->model('Paciente');
-//		$this->load->library('form');
+		$this->load->model('paciente_model');
 	}
 
 	// View
-	public function index(){
-		$this->load->view('pacientes'); // todo
+	public function index()
+	{
+		$dados['pacientes'] = $this->paciente_model->index();
+		$dados['titulo'] = 'Pacientes';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/pacientes', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function cadastrar(){
-		// TODO: Implement cadastrar() method.
+	/**
+	 * Abre página para cadastrar novo item
+	 * */
+	public function novo()
+	{
+		$dados['titulo'] = 'Novo Paciente';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-paciente', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function listarTodos(){
-		// TODO: Implement listarTodos() method.
+	/**
+	 * Chama model pra SALVAR no banco o novo item
+	 * */
+	public function insert()
+	{
+		$novo_item = $_POST; // valores recebidos do form
+
+		$this->paciente_model->salvar($novo_item);
+		redirect(base_url("pacientes"));
 	}
 
-	public function editar(){
-		// TODO: Implement editar() method.
+	/**
+	 * Abre página para Editar um item
+	 * */
+	public function editar($id){
+		$dados['paciente'] = $this->paciente_model->id_editar($id);
+		$dados['titulo'] = 'Editar Paciente';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-paciente', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function excluir(){
-		// TODO: Implement excluir() method.
+	/**
+	 * Chama model pra ATUALIZAR no banco o item
+	 * */
+	public function update($id) //todo
+	{
+		$update_item = $_POST;
+
+		$this->paciente_model->atualizar($update_item);
+		redirect("pacientes"); // todo
+	}
+
+	/**
+	 * Abre página para Excluir um item
+	 * */
+	public function deletar($id)
+	{
+		$this->paciente_model->delete($id);
+		redirect("pacientes"); // todo
 	}
 
 }
