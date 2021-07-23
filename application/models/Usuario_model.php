@@ -46,10 +46,9 @@ class Usuario_model extends CI_Model
 	/**
 	 * Update no banco
 	 */
-	public function atualizar($update_item)
+	public function atualizar($update_item, $id)
 	{
-		$this->db->where("id", $update_item["id"]);
-		return $this->db->update('login', $update_item);
+		return $this->db->update('login', $update_item, array('id' => $id));
 	}
 
 	/**

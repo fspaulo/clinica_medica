@@ -21,11 +21,6 @@ class Especialidade_model extends CI_Model
 	function salvar($data)
 	{
 		$this->db->insert('especialidade', $data);
-
-		if ($this->db->insert_id())
-			return true;
-		else
-			return false;
 	}
 
 	/**
@@ -41,10 +36,9 @@ class Especialidade_model extends CI_Model
 	/**
 	 * Update no banco
 	 */
-	public function atualizar($id, $update_item)
+	public function atualizar($update_item, $id)
 	{
-		$this->db->where("id", $id);
-		return $this->db->update('especialidade', $update_item);
+		return $this->db->update('especialidade', $update_item, array('id' => $id));
 	}
 
 	/**

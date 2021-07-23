@@ -37,7 +37,6 @@ class Especialidades extends CI_Controller
 	 * */
 	public function insert()
 	{
-		$this->load->helper('url');
 		$novo_item = $_POST; // valores recebidos do form
 
 		$this->especialidade_model->salvar($novo_item);
@@ -61,10 +60,13 @@ class Especialidades extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = $_POST;
+		$update_item = [
+			'nome' => $this->input->post('nome'),
+			'valor' => $this->input->post('valor'),
+		];
 
-		$this->especialidade_model->atualizar($id, $update_item);
-		redirect("especialidades"); // todo
+		$this->especialidade_model->atualizar($update_item, $id);
+		redirect(base_url("especialidades"));
 	}
 
 	/**

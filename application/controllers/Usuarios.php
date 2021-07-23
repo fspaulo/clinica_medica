@@ -37,12 +37,12 @@ class Usuarios extends CI_Controller
 	/**
 	 * Chama model pra ATUALIZAR no banco o item
 	 * */
-	public function update()
+	public function update($id)
 	{
 		$update_item = $_POST;
 
-		$this->usuario_model->atualizar($update_item);
-		redirect("usuarios"); // todo
+		$this->usuario_model->atualizar($update_item, $id);
+		redirect(base_url("usuarios"));
 	}
 
 	/**
