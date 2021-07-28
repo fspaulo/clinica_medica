@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller {
 
 	public function index(){
-		permission(); // todo colocar em todos controllers
+		permission(); // usado para ver se o user está logado
 
 		$dados['titulo'] = "Gerenciamento";
 

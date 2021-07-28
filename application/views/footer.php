@@ -2,7 +2,7 @@
 		</section>
 		<!-- Footer-->
 		<footer class="py-2 bg-primary">
-			<div class="container"><p class="m-0 text-center text-white">Cópia Não Comédia &copy; Paulo O. Ferreira 2021</p>
+			<div class="container"><p class="m-0 text-center text-white">Frameworks II &copy; Paulo O. Ferreira 2021</p>
 			</div>
 		</footer>
 		<!-- Bootstrap core JS-->

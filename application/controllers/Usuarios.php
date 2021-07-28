@@ -14,6 +14,8 @@ class Usuarios extends CI_Controller
 	// View
 	public function index()
 	{
+		permission(); // usado para ver se o user está logado
+
 		$dados['usuarios'] = $this->usuario_model->index();
 		$dados['titulo'] = 'Usuários';
 

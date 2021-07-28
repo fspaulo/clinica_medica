@@ -4,7 +4,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Especialidades extends CI_Controller
 {
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('especialidade_model');
 	}
@@ -12,6 +13,8 @@ class Especialidades extends CI_Controller
 	// View
 	public function index()
 	{
+		permission(); // usado para ver se o user está logado
+
 		$dados['especialidades'] = $this->especialidade_model->index();
 		$dados['titulo'] = 'Especialidades';
 
@@ -46,7 +49,8 @@ class Especialidades extends CI_Controller
 	/**
 	 * Abre página para Editar um item
 	 * */
-	public function editar($id){
+	public function editar($id)
+	{
 		$dados['especialidade'] = $this->especialidade_model->id_editar($id);
 		$dados['titulo'] = 'Editar Especialidade';
 

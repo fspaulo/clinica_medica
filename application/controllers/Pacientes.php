@@ -12,6 +12,8 @@ class Pacientes extends CI_Controller{
 	// View
 	public function index()
 	{
+		permission(); // usado para ver se o user está logado
+
 		$dados['pacientes'] = $this->paciente_model->index();
 		$dados['titulo'] = 'Pacientes';
 
