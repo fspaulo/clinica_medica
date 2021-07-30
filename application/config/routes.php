@@ -52,12 +52,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home'; //home
 $route['home'] = 'home';
 $route['especialidades'] = 'Especialidades';
-$route['especialidades/editar/(:any)'] = 'Especialidades/editar/$1';
+$route['especialidades/editar/(:any)'] = 'especialidades/editar/$1';
 $route['pacientes'] = 'pacientes';
 $route['pacientes/editar/(:any)'] = 'pacientes/editar/$1';
 $route['usuarios'] = 'usuarios';
 $route['usuarios/editar/(:any)'] = 'usuarios/editar/$1';
 $route['medicos'] = 'medicos';
 $route['medicos/editar/(:any)'] = 'medicos/editar/$1';
+$route['consultas'] = 'consultas';
+$route['consultas/editar/(:any)'] = 'consultas/editar/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
