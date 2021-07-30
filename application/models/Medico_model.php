@@ -1,34 +1,53 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Medico_model extends CI_Model{
+class Medico_model extends CI_Model
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
-//		$this->load->library('database'); // carrega o banco
 	}
 
-
-	function Save($data){
-		$this->db->insert('table',$data);
-		if($this->db->insert_id()){
-			return true;
-		}else{
-			return false;
-		}
+	public function index()
+	{
+		return $this->db->get("medico")->result_array();
 	}
 
-	function edit($data){
-
+	/**
+	 * Insert no banco
+	 */
+	function salvar($data)
+	{
+		$this->db->insert('medico', $data);
 	}
 
-	function delete($data){
-
+	/**
+	 * Funcao retorna o id para mostrar na tela editar
+	 */
+	public function id_editar($id)
+	{
+		return $this->db->get_where('medico', array(
+			"id" => $id  // campo banco => parametro
+		))->row_array();
 	}
 
-	function getAll($data){
+	/**
+	 * Update no banco
+	 */
+	public function atualizar($update_item, $id)
+	{
+		return $this->db->update('medico', $update_item, array('id' => $id));
+	}
 
+	/**
+	 * Delete no banco
+	 */
+	function delete($id)
+	{
+		$this->db->where("id", $id);
+		return $this->db->delete('medico');
 	}
 
 }

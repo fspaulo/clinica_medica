@@ -2,32 +2,84 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Medicos extends CI_Controller{
-
-	function __construct(){
+class Medicos extends CI_Controller
+{
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('medico_model');
-//		$this->load->library('form');
 	}
 
 	// View
-	public function index(){
-		$this->load->view('pages/medico'); // todo
+	public function index()
+	{
+		permission(); // usado para ver se o user está logado
+
+		$dados['medicos'] = $this->medico_model->index();
+		$dados['titulo'] = 'Médicos';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/medicos', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function cadastrar(){
-		// TODO: Implement cadastrar() method.
+	/**
+	 * Abre página para cadastrar novo item
+	 * */
+	public function novo()
+	{
+		$dados['titulo'] = 'Novo Médico';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-medico', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function listarTodos(){
-		// TODO: Implement listarTodos() method.
+	/**
+	 * Chama model pra SALVAR no banco o novo item
+	 * */
+	public function insert()
+	{
+		$novo_item = $_POST; // valores recebidos do form
+
+		$this->medico_model->salvar($novo_item);
+		redirect(base_url("medicos")); //todo
 	}
 
-	public function editar($id){
-		// TODO: Implement editar() method.
+	/**
+	 * Abre página para Editar um item
+	 * */
+	public function editar($id)
+	{
+		$dados['medico'] = $this->medico_model->id_editar($id);
+		$dados['titulo'] = 'Editar Médico';
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-medico', $dados);
+		$this->load->view('footer', $dados);
 	}
 
-	public function excluir($id){
-		// TODO: Implement excluir() method.
+	/**
+	 * Chama model pra ATUALIZAR no banco o item
+	 * */
+	public function update($id)
+	{
+		$update_item = [
+			'nome' => $this->input->post('nome'),
+			'valor' => $this->input->post('valor'),
+		];
+
+		$this->medico_model->atualizar($update_item, $id);
+		redirect(base_url("medicos"));
 	}
+
+	/**
+	 * Abre página para Excluir um item
+	 * */
+	public function deletar($id)
+	{
+		$this->medico_model->delete($id);
+		redirect("medicos"); // todo
+	}
+
 }

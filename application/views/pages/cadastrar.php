@@ -39,7 +39,10 @@
 					<div class="row">
 						<div class="col-md-7 pe-0">
 							<div class="form-left h-100 py-5 px-5">
+								<?php if(isset($mensagens)) echo $mensagens; ?>
 								<form action="<?php base_url() ?>cadastrar/salvar" method="post" class="row g-4">
+<!--									--><?php //echo validation_errors(); ?>
+<!--									--><?php //echo form_open('form'); ?>
 									<div class="col-12">
 										<label for="usuario">Usuário<span class="text-danger">*</span></label>
 										<div class="input-group">

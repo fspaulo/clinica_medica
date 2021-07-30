@@ -57,5 +57,7 @@ $route['pacientes'] = 'pacientes';
 $route['pacientes/editar/(:any)'] = 'pacientes/editar/$1';
 $route['usuarios'] = 'usuarios';
 $route['usuarios/editar/(:any)'] = 'usuarios/editar/$1';
+$route['medicos'] = 'medicos';
+$route['medicos/editar/(:any)'] = 'medicos/editar/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
