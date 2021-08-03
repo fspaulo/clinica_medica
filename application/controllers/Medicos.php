@@ -29,6 +29,7 @@ class Medicos extends CI_Controller
 	public function novo()
 	{
 		$dados['titulo'] = 'Novo Médico';
+		$dados['especialidades'] = $this->medico_model->getEspecialidade();
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-medico', $dados);
@@ -51,8 +52,9 @@ class Medicos extends CI_Controller
 	 * */
 	public function editar($id)
 	{
-		$dados['medico'] = $this->medico_model->id_editar($id);
 		$dados['titulo'] = 'Editar Médico';
+		$dados['medico'] = $this->medico_model->id_editar($id);
+		$dados['especialidades'] = $this->medico_model->getEspecialidade();
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-medico', $dados);

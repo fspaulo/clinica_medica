@@ -50,4 +50,12 @@ class Medico_model extends CI_Model
 		return $this->db->delete('medico');
 	}
 
+	/**
+	 * Pega especialidades para mostrar em medicos
+	 */
+	public function getEspecialidade()
+	{
+		return $this->db->get("especialidade")->result_array();
+	}
+
 }

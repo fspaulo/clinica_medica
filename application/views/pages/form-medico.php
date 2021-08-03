@@ -2,7 +2,7 @@
 	<div class="row justify-content-center">
 		<div class="col mb-5">
 			<div class="card">
-				<?php if (isset($medico)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->
+				<?php if (isset($medico)) : ?> <!-- Se possui a variavel $medico, atualiza -->
 					<form action="<?= site_url() ?>medicos/update/<?=$medico['id']?>" method="post" class="row g-3 m-lg-2">
       			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
 					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2"><!-- <=//php base_url() ?>medicos/salvar-->
@@ -18,12 +18,12 @@
 							<input type="text" class="form-control" id="nome" name="nome" value="<?= isset($medico) ? $medico["nome"] : "" ?>">
 						</div>
 						<div class="col-md-7">
-							<label for="especialidade" class="form-label">Especialidade</label>
-							<select class="form-select" aria-label="" id="especialidade" name="especialidade">
-								<option selected>Selecione</option> <!-- todo pegar id's de especialidade -->
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+							<label for="especialidade_id" class="form-label">Especialidade</label>
+							<select class="form-select" aria-label="" id="especialidade_id" name="especialidade_id">
+								<option selected>Selecione</option>
+								<?php foreach ($especialidades as $e) : ?>
+									<option value="<?= $e['id'] ?>"><?= $e['nome'] ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="col-7">
