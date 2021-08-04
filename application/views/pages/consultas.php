@@ -30,8 +30,8 @@
 					<td><?= $c['data'] ?></td>
 					<td><?= $c['hora'] ?></td>
 					<td><?= $c['valor'] ?></td>
-					<td><?= $c['medico'] ?></td>
-					<td><?= $c['paciente'] ?></td>
+					<td><?= $c['medico_id'] ?></td>
+					<td><?= $c['paciente_id'] ?></td>
 					<td>
 						<a href="<?php base_url() ?>consultas/editar/<?= $c['id'] ?>"
 						   class="btn btn-sm btn-warning">

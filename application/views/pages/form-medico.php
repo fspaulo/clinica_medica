@@ -3,10 +3,12 @@
 		<div class="col mb-5">
 			<div class="card">
 				<?php if (isset($medico)) : ?> <!-- Se possui a variavel $medico, atualiza -->
-					<form action="<?= site_url() ?>medicos/update/<?=$medico['id']?>" method="post" class="row g-3 m-lg-2">
-      			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
-					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2"><!-- <=//php base_url() ?>medicos/salvar-->
-				<?php endif; ?>
+				<form action="<?= site_url() ?>medicos/update/<?= $medico['id'] ?>" method="post"
+					  class="row g-3 m-lg-2">
+					<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
+					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2">
+						<!-- <=//php base_url() ?>medicos/salvar-->
+						<?php endif; ?>
 						<input type="hidden" name="id" value="<?= isset($medico) ? $medico["id"] : "" ?>">
 						<div class="col-md-5">
 							<label for="crm" class="form-label">CRM</label>
@@ -15,15 +17,35 @@
 						</div>
 						<div class="col-7">
 							<label for="nome" class="form-label">Nome</label>
-							<input type="text" class="form-control" id="nome" name="nome" value="<?= isset($medico) ? $medico["nome"] : "" ?>">
+							<input type="text" class="form-control" id="nome" name="nome"
+								   value="<?= isset($medico) ? $medico["nome"] : "" ?>">
 						</div>
 						<div class="col-md-7">
 							<label for="especialidade_id" class="form-label">Especialidade</label>
 							<select class="form-select" aria-label="" id="especialidade_id" name="especialidade_id">
-								<option selected>Selecione</option>
-								<?php foreach ($especialidades as $e) : ?>
-									<option value="<?= $e['id'] ?>"><?= $e['nome'] ?></option>
-								<?php endforeach; ?>
+
+								<?php if (isset($medico)) : ?> <!-- Se possui a variavel, pega o id ja existente -->
+									<option selected value="<?= $especi['id'] ?>">
+										<?= $especi['nome'] ?>
+									</option>
+
+									<?php foreach ($especialidades as $e) : ?>
+										<option value="<?= $e['id'] ?>">
+											<?= $e['nome'] ?>
+										</option>
+									<?php endforeach; ?>
+
+								<?php else : ?> <!-- Senão -->
+									<option selected>Selecione</option>
+
+									<?php foreach ($especialidades as $e) : ?>
+										<option value="<?= $e['id'] ?>">
+											<?= $e['nome'] ?>
+										</option>
+									<?php endforeach; ?>
+
+								<?php endif; ?>
+
 							</select>
 						</div>
 						<div class="col-7">
