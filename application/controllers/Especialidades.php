@@ -42,8 +42,30 @@ class Especialidades extends CI_Controller
 	{
 		$novo_item = $_POST; // valores recebidos do form
 
-		$this->especialidade_model->salvar($novo_item);
-		redirect(base_url("especialidades")); //todo
+		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o seu nome',
+				'min_length' => 'O campo deve possuir mais de 2 digitos',
+			));
+		$this->form_validation->set_rules("valor", "Valor", "trim|required|min_length[1]|numeric",
+			array(
+				'required' => 'Informe o valor',
+				'min_length' => 'O campo deve possuir mais de 1 digito',
+				'numeric' => 'O campo deve ser numérico',
+			));
+
+		if($this->form_validation->run() == false){
+			$dados['titulo'] = 'Nova Especialidade';
+			$dados['formErrors'] = validation_errors();
+
+			$this->load->view('header', $dados);
+			$this->load->view('pages/form-especi', $dados);
+			$this->load->view('footer', $dados);
+
+		} else {
+			$this->especialidade_model->salvar($novo_item);
+			redirect(base_url("especialidades"));
+		}
 	}
 
 	/**
