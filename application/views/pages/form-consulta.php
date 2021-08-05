@@ -25,20 +25,20 @@
 						</div>
 						<div class="col-md-7">
 							<label for="medico" class="form-label">Médico</label>
-							<select class="form-select" aria-label="" id="medico" name="medico">
-								<option selected>Selecione</option> <!-- todo pegar id's de medico -->
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+							<select class="form-select" aria-label="" id="medico" name="medico_id">
+								<option selected>Selecione</option>
+								<?php foreach ($medicos as $m) : ?>
+									<option value="<?= $m['id'] ?>"><?= $m['nome'] ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="col-md-7">
 							<label for="paciente" class="form-label">Paciente</label>
-							<select class="form-select" aria-label="" id="paciente" name="paciente">
-								<option selected>Selecione</option> <!-- todo pegar id's de paciente -->
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+							<select class="form-select" aria-label="" id="paciente" name="paciente_id">
+								<option selected>Selecione</option>
+								<?php foreach ($pacientes as $p) : ?>
+									<option value="<?= $p['id'] ?>"><?= $p['nome'] ?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="col-12">

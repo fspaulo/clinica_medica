@@ -30,6 +30,8 @@ class Consultas extends CI_Controller
 	public function novo()
 	{
 		$dados['titulo'] = 'Marcar Consulta';
+		$dados['medicos'] = $this->consulta_model->getMedicos();
+		$dados['pacientes'] = $this->consulta_model->getPacientes();
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-consulta', $dados);
@@ -52,8 +54,10 @@ class Consultas extends CI_Controller
 	 * */
 	public function editar($id)
 	{
-		$dados['consulta'] = $this->consulta_model->id_editar($id);
 		$dados['titulo'] = 'Editar Consulta';
+		$dados['consulta'] = $this->consulta_model->id_editar($id);
+		$dados['medicos'] = $this->consulta_model->getMedicos();
+		$dados['pacientes'] = $this->consulta_model->getPacientes();
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-consulta', $dados);
@@ -65,10 +69,7 @@ class Consultas extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = [
-			'nome' => $this->input->post('nome'),
-			'valor' => $this->input->post('valor'),
-		];
+		$update_item = $_POST;
 
 		$this->consulta_model->atualizar($update_item, $id);
 		redirect(base_url("consultas"));

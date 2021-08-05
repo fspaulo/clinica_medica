@@ -58,4 +58,16 @@ class Medico_model extends CI_Model
 		return $this->db->get("especialidade")->result_array();
 	}
 
+	/**
+	 * Pega especialidades para mostrar em medicos
+	 */
+	public function getNomeFromEspecialidade($id)
+	{
+		$this->db->select('especialidade.*');
+		$this->db->from('medico');
+		$this->db->join('especialidade', 'especialidade.id = medico.id');
+		$this->db->where('medico.id',$id);
+
+		return $this->db->get->row_array();
+	}
 }

@@ -55,6 +55,7 @@ class Medicos extends CI_Controller
 		$dados['titulo'] = 'Editar Médico';
 		$dados['medico'] = $this->medico_model->id_editar($id);
 		$dados['especialidades'] = $this->medico_model->getEspecialidade();
+		$dados['especi'] = $this->medico_model->getNomeFromEspecialidade($id);
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-medico', $dados);
@@ -66,10 +67,7 @@ class Medicos extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = [
-			'nome' => $this->input->post('nome'),
-			'valor' => $this->input->post('valor'),
-		];
+		$update_item = $_POST;
 
 		$this->medico_model->atualizar($update_item, $id);
 		redirect(base_url("medicos"));

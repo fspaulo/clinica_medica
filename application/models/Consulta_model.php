@@ -50,4 +50,20 @@ class Consulta_model extends CI_Model
 		return $this->db->delete('consulta');
 	}
 
+	/**
+	 * Pega medicos para mostrar em consultas
+	 */
+	public function getMedicos()
+	{
+		return $this->db->get("medico")->result_array();
+	}
+
+	/**
+	 * Pega pacientes para mostrar em consultas
+	 */
+	public function getPacientes()
+	{
+		return $this->db->get("paciente")->result_array();
+	}
+
 }
