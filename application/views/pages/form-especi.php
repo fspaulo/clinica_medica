@@ -3,7 +3,9 @@
 		<div class="col mb-5">
 			<div class="card">
 				<?php if (isset($formErrors)) : ?>
-					<div class="alert wy-alert-danger"><?= $formErrors ?></div>
+					<div class="alert alert-warning mb-0" role="alert">
+						<span><?= $formErrors ?></span>
+					</div>
 				<?php endif; ?>
 
 				<?php if (isset($especialidade)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->

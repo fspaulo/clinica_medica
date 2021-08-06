@@ -2,6 +2,12 @@
 	<div class="row justify-content-center">
 		<div class="col mb-5">
 			<div class="card">
+				<?php if (isset($formErrors)) : ?>
+					<div class="alert alert-warning mb-0" role="alert">
+						<span><?= $formErrors ?></span>
+					</div>
+				<?php endif; ?>
+
 				<?php if (isset($user)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->
 					<form action="<?= site_url() ?>usuarios/update/<?=$user['id']?>" method="post" class="row g-3 m-lg-2">
       			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->

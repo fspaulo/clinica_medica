@@ -39,16 +39,18 @@
 					<div class="row">
 						<div class="col-md-7 pe-0">
 							<div class="form-left h-100 py-5 px-5">
-								<?php if(isset($mensagens)) echo $mensagens; ?>
 								<form action="<?php base_url() ?>cadastrar/salvar" method="post" class="row g-4">
-<!--									--><?php //echo validation_errors(); ?>
-<!--									--><?php //echo form_open('form'); ?>
+									<?php if (isset($formErrors)) : ?>
+										<div class="alert alert-warning mb-0" role="alert">
+											<span><?= $formErrors ?></span>
+										</div>
+									<?php endif; ?>
 									<div class="col-12">
 										<label for="usuario">Usuário<span class="text-danger">*</span></label>
 										<div class="input-group">
 											<div class="input-group-text"><i class="bi bi-person-fill"></i></div>
 											<input type="text" name="usuario" id="usuario" class="form-control"
-												   placeholder="Informe o novo usuário" required autofocus>
+												   placeholder="Informe o novo usuário" autofocus>
 										</div>
 									</div>
 
@@ -56,7 +58,7 @@
 										<label for="senha">Senha<span class="text-danger">*</span></label>
 										<div class="input-group">
 											<div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-											<input type="password" name="senha" id="senha" class="form-control" placeholder="Informe a nova senha" required>
+											<input type="password" name="senha" id="senha" class="form-control" placeholder="Informe a nova senha">
 										</div>
 									</div>
 

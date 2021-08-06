@@ -43,8 +43,30 @@ class Usuarios extends CI_Controller
 	{
 		$update_item = $_POST;
 
-		$this->usuario_model->atualizar($update_item, $id);
-		redirect(base_url("usuarios"));
+		$this->form_validation->set_rules("usuario", "Usuario", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o novo Usuário',
+				'min_length' => 'O campo deve possuir mais de 2 digitos',
+			));
+		$this->form_validation->set_rules("senha", "Senha", "trim|required|min_length[1]",
+			array(
+				'required' => 'Informe a nova Senha',
+				'min_length' => 'O campo deve possuir mais de 1 digito',
+			));
+
+		if($this->form_validation->run() == false){
+			$dados['user'] = $this->usuario_model->id_editar($id);
+			$dados['titulo'] = 'Editar Usuário';
+			$dados['formErrors'] = validation_errors();
+
+			$this->load->view('header', $dados);
+			$this->load->view('pages/form-user', $dados);
+			$this->load->view('footer', $dados);
+
+		} else {
+			$this->usuario_model->atualizar($update_item, $id);
+			redirect(base_url("usuarios"));
+		}
 	}
 
 	/**
