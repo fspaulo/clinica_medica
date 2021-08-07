@@ -40,19 +40,7 @@ class Especialidades extends CI_Controller
 	 * */
 	public function insert()
 	{
-		$novo_item = $_POST; // valores recebidos do form
-
-		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
-			array(
-				'required' => 'Informe o seu nome',
-				'min_length' => 'O campo deve possuir mais de 2 digitos',
-			));
-		$this->form_validation->set_rules("valor", "Valor", "trim|required|min_length[1]|numeric",
-			array(
-				'required' => 'Informe o valor',
-				'min_length' => 'O campo deve possuir mais de 1 digito',
-				'numeric' => 'O campo deve ser numérico',
-			));
+		$novo_item = $this->getValidation_item();
 
 		if($this->form_validation->run() == false){
 			$dados['titulo'] = 'Nova Especialidade';
@@ -86,22 +74,7 @@ class Especialidades extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = [
-			'nome' => $this->input->post('nome'),
-			'valor' => $this->input->post('valor'),
-		];
-
-		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
-			array(
-				'required' => 'Informe o seu nome',
-				'min_length' => 'O campo deve possuir mais de 2 digitos',
-			));
-		$this->form_validation->set_rules("valor", "Valor", "trim|required|min_length[1]|numeric",
-			array(
-				'required' => 'Informe o valor',
-				'min_length' => 'O campo deve possuir mais de 1 digito',
-				'numeric' => 'O campo deve ser numérico',
-			));
+		$update_item = $this->getValidation_item();
 
 		if($this->form_validation->run() == false){
 			$dados['titulo'] = 'Editar Especialidade';
@@ -125,6 +98,30 @@ class Especialidades extends CI_Controller
 	{
 		$this->especialidade_model->delete($id);
 		redirect("especialidades");
+	}
+
+	/**
+	 * Método retorna o _POST do form e tambem as validacoes configuradas
+	 * @return array
+	 */
+	public function getValidation_item()
+	{
+		$update_item = $_POST;
+
+		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o seu nome',
+				'min_length' => 'O campo deve possuir mais de 2 digitos',
+			));
+
+		$this->form_validation->set_rules("valor", "Valor", "trim|required|min_length[1]|numeric",
+			array(
+				'required' => 'Informe o valor',
+				'min_length' => 'O campo deve possuir mais de 1 digito',
+				'numeric' => 'O campo deve ser numérico',
+			));
+
+		return $update_item;
 	}
 
 }

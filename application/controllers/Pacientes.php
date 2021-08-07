@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pacientes extends CI_Controller{
+class Pacientes extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('paciente_model');
 	}
@@ -39,18 +41,31 @@ class Pacientes extends CI_Controller{
 	 * */
 	public function insert()
 	{
-		$novo_item = $_POST; // valores recebidos do form
+		$novo_item = $this->getValidation_item(); // valores recebidos do form
 
-		$this->paciente_model->salvar($novo_item);
-		redirect(base_url("pacientes"));
+		if ($this->form_validation->run() == false) {
+
+			$dados['titulo'] = 'Novo Paciente';
+			$dados['formErrors'] = validation_errors();
+
+			$this->load->view('header', $dados);
+			$this->load->view('pages/form-paciente', $dados);
+			$this->load->view('footer', $dados);
+
+		} else {
+
+			$this->paciente_model->salvar($novo_item);
+			redirect(base_url("pacientes"));
+		}
 	}
 
 	/**
 	 * Abre página para Editar um item
 	 * */
-	public function editar($id){
-		$dados['paciente'] = $this->paciente_model->id_editar($id);
+	public function editar($id)
+	{
 		$dados['titulo'] = 'Editar Paciente';
+		$dados['paciente'] = $this->paciente_model->id_editar($id);
 
 		$this->load->view('header', $dados);
 		$this->load->view('pages/form-paciente', $dados);
@@ -60,12 +75,25 @@ class Pacientes extends CI_Controller{
 	/**
 	 * Chama model pra ATUALIZAR no banco o item
 	 * */
-	public function update($id) //todo
+	public function update($id)
 	{
-		$update_item = $_POST;
+		$update_item = $this->getValidation_item();
 
-		$this->paciente_model->atualizar($update_item);
-		redirect("pacientes"); // todo
+		if ($this->form_validation->run() == false) {
+
+			$dados['titulo'] = 'Editar Paciente';
+			$dados['paciente'] = $this->paciente_model->id_editar($id);
+			$dados['formErrors'] = validation_errors();
+
+			$this->load->view('header', $dados);
+			$this->load->view('pages/form-paciente', $dados);
+			$this->load->view('footer', $dados);
+
+		} else {
+
+			$this->paciente_model->atualizar($update_item);
+			redirect("pacientes");
+		}
 	}
 
 	/**
@@ -75,6 +103,42 @@ class Pacientes extends CI_Controller{
 	{
 		$this->paciente_model->delete($id);
 		redirect("pacientes"); // todo
+	}
+
+	/**
+	 * Método retorna o _POST do form e tambem as validacoes configuradas
+	 * @return array
+	 */
+	public function getValidation_item()
+	{
+		$update_item = $_POST;
+
+		$this->form_validation->set_rules("cpf", "CPF", "trim|required|min_length[11]|max_length[11]|numeric",
+			array(
+				'required' => 'Informe o CPF',
+				'min_length' => 'O CPF deve possuir 11 digitos',
+				'max_length' => 'O CPF deve possuir 11 digitos',
+				'numeric' => 'O CPF deve ser numérico',
+			));
+
+		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o Nome',
+				'min_length' => 'O Nome deve possuir mais de 2 digitos',
+			));
+
+		$this->form_validation->set_rules("email", "Email", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o Email',
+				'min_length' => 'O Email deve possuir mais de 2 digitos',
+			));
+
+		$this->form_validation->set_rules("telefone", "Telefone", "trim|required",
+			array(
+				'required' => 'Informe o Telefone',
+			));
+
+		return $update_item;
 	}
 
 }
