@@ -11,11 +11,11 @@
 		  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<meta name="theme-color" content="#563d7c">
 
-
 	<style>
 		a {
 			text-decoration: none;
 		}
+
 		.login-page {
 			width: 100%;
 			height: 100vh;
@@ -23,6 +23,7 @@
 			display: flex;
 			align-items: center;
 		}
+
 		.form-right i {
 			font-size: 100px;
 		}
@@ -58,16 +59,21 @@
 										<label for="senha">Senha<span class="text-danger">*</span></label>
 										<div class="input-group">
 											<div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-											<input type="password" name="senha" id="senha" class="form-control" placeholder="Informe a nova senha">
+											<input type="password" name="senha" id="senha" class="form-control"
+												   placeholder="Informe a nova senha">
 										</div>
 									</div>
 
 									<div class="col-sm-6">
-										<a href="<?php base_url() ?>login" class="float-end text-primary">Já possui uma conta?</a>
+										<a href="<?php base_url() ?>login" class="float-end text-primary">
+											Já possui uma conta?
+										</a>
 									</div>
 
 									<div class="col-12">
-										<button type="submit" class="btn btn-primary px-4 float-end mt-4">Cadastrar</button>
+										<button type="submit" class="btn btn-primary px-4 float-end mt-4">
+											Cadastrar
+										</button>
 									</div>
 								</form>
 							</div>

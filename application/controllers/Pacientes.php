@@ -25,15 +25,23 @@ class Pacientes extends CI_Controller
 	}
 
 	/**
+	 * Metodo responsavel por montar o formulario
+	 */
+	public function montarForm(array $dados)
+	{
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-paciente', $dados);
+		$this->load->view('footer', $dados);
+	}
+
+	/**
 	 * Abre página para cadastrar novo item
 	 * */
 	public function novo()
 	{
 		$dados['titulo'] = 'Novo Paciente';
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-paciente', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -48,12 +56,9 @@ class Pacientes extends CI_Controller
 			$dados['titulo'] = 'Novo Paciente';
 			$dados['formErrors'] = validation_errors();
 
-			$this->load->view('header', $dados);
-			$this->load->view('pages/form-paciente', $dados);
-			$this->load->view('footer', $dados);
+			$this->montarForm($dados);
 
 		} else {
-
 			$this->paciente_model->salvar($novo_item);
 			redirect(base_url("pacientes"));
 		}
@@ -67,9 +72,7 @@ class Pacientes extends CI_Controller
 		$dados['titulo'] = 'Editar Paciente';
 		$dados['paciente'] = $this->paciente_model->id_editar($id);
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-paciente', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -85,12 +88,9 @@ class Pacientes extends CI_Controller
 			$dados['paciente'] = $this->paciente_model->id_editar($id);
 			$dados['formErrors'] = validation_errors();
 
-			$this->load->view('header', $dados);
-			$this->load->view('pages/form-paciente', $dados);
-			$this->load->view('footer', $dados);
+			$this->montarForm($dados);
 
 		} else {
-
 			$this->paciente_model->atualizar($update_item);
 			redirect("pacientes");
 		}
@@ -140,5 +140,4 @@ class Pacientes extends CI_Controller
 
 		return $update_item;
 	}
-
 }

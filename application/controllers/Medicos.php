@@ -24,6 +24,16 @@ class Medicos extends CI_Controller
 	}
 
 	/**
+	 * Metodo responsavel por montar o formulario
+	 */
+	public function montarForm(array $dados)
+	{
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-medico', $dados);
+		$this->load->view('footer', $dados);
+	}
+
+	/**
 	 * Abre página para cadastrar novo item
 	 * */
 	public function novo()
@@ -31,9 +41,7 @@ class Medicos extends CI_Controller
 		$dados['titulo'] = 'Novo Médico';
 		$dados['especialidades'] = $this->medico_model->getEspecialidade();
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-medico', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -41,10 +49,20 @@ class Medicos extends CI_Controller
 	 * */
 	public function insert()
 	{
-		$novo_item = $_POST; // valores recebidos do form
+		$novo_item = $this->getValidation_item();
 
-		$this->medico_model->salvar($novo_item);
-		redirect(base_url("medicos")); //todo
+		if ($this->form_validation->run() == false) {
+
+			$dados['titulo'] = 'Novo Médico';
+			$dados['especialidades'] = $this->medico_model->getEspecialidade();
+			$dados['formErrors'] = validation_errors();
+
+			$this->montarForm($dados);
+
+		} else {
+			$this->medico_model->salvar($novo_item);
+			redirect(base_url("medicos"));
+		}
 	}
 
 	/**
@@ -57,9 +75,7 @@ class Medicos extends CI_Controller
 		$dados['especialidades'] = $this->medico_model->getEspecialidade();
 		$dados['especi'] = $this->medico_model->getNomeFromEspecialidade($id);
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-medico', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -67,10 +83,22 @@ class Medicos extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = $_POST;
+		$update_item = $this->getValidation_item();
 
-		$this->medico_model->atualizar($update_item, $id);
-		redirect(base_url("medicos"));
+		if ($this->form_validation->run() == false) {
+
+			$dados['titulo'] = 'Editar Médico';
+			$dados['medico'] = $this->medico_model->id_editar($id);
+			$dados['especialidades'] = $this->medico_model->getEspecialidade();
+			$dados['especi'] = $this->medico_model->getNomeFromEspecialidade($id);
+			$dados['formErrors'] = validation_errors();
+
+			$this->montarForm($dados);
+
+		} else {
+			$this->medico_model->atualizar($update_item, $id);
+			redirect(base_url("medicos"));
+		}
 	}
 
 	/**
@@ -82,4 +110,31 @@ class Medicos extends CI_Controller
 		redirect("medicos"); // todo
 	}
 
+	/**
+	 * Método retorna o _POST do form e tambem as validacoes configuradas
+	 */
+	public function getValidation_item()
+	{
+		$update_item = $_POST;
+
+		$this->form_validation->set_rules("crm", "CRM", "trim|required|min_length[11]|max_length[11]",
+			array(
+				'required' => 'Informe o CRM',
+				'min_length' => 'O CRM deve possuir 11 digitos',
+				'max_length' => 'O CRM deve possuir 11 digitos',
+			));
+
+		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
+			array(
+				'required' => 'Informe o Nome',
+				'min_length' => 'O Nome deve possuir mais de 2 digitos',
+			));
+
+		$this->form_validation->set_rules("telefone", "Telefone", "trim|required",
+			array(
+				'required' => 'Informe o Telefone',
+			));
+
+		return $update_item;
+	}
 }

@@ -25,6 +25,17 @@ class Consultas extends CI_Controller
 	}
 
 	/**
+	 * Metodo responsavel por montar o formulario
+	 * @param array $dados
+	 */
+	public function montarForm(array $dados)
+	{
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-consulta', $dados);
+		$this->load->view('footer', $dados);
+	}
+
+	/**
 	 * Abre página para cadastrar novo item
 	 * */
 	public function novo()
@@ -33,9 +44,7 @@ class Consultas extends CI_Controller
 		$dados['medicos'] = $this->consulta_model->getMedicos();
 		$dados['pacientes'] = $this->consulta_model->getPacientes();
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-consulta', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -43,10 +52,22 @@ class Consultas extends CI_Controller
 	 * */
 	public function insert()
 	{
-		$novo_item = $_POST; // valores recebidos do form
+		$novo_item = $this->getValidation_item();
 
-		$this->consulta_model->salvar($novo_item);
-		redirect(base_url("consultas")); //todo
+		if($this->form_validation->run() == false){
+
+			$dados['titulo'] = 'Marcar Consulta';
+			$dados['medicos'] = $this->consulta_model->getMedicos();
+			$dados['pacientes'] = $this->consulta_model->getPacientes();
+			$dados['formErrors'] = validation_errors();
+
+			$this->montarForm($dados);
+
+		} else {
+
+			$this->consulta_model->salvar($novo_item);
+			redirect(base_url("consultas"));
+		}
 	}
 
 	/**
@@ -59,9 +80,10 @@ class Consultas extends CI_Controller
 		$dados['medicos'] = $this->consulta_model->getMedicos();
 		$dados['pacientes'] = $this->consulta_model->getPacientes();
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-consulta', $dados);
-		$this->load->view('footer', $dados);
+		$dados['med'] = $this->consulta_model->getNomeFromMedico($id);
+		$dados['paci'] = $this->consulta_model->getNomeFromPaciente($id);
+
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -69,10 +91,23 @@ class Consultas extends CI_Controller
 	 * */
 	public function update($id)
 	{
-		$update_item = $_POST;
+		$update_item = $this->getValidation_item();
 
-		$this->consulta_model->atualizar($update_item, $id);
-		redirect(base_url("consultas"));
+		if($this->form_validation->run() == false){
+
+			$dados['titulo'] = 'Editar Consulta';
+			$dados['consulta'] = $this->consulta_model->id_editar($id);
+			$dados['medicos'] = $this->consulta_model->getMedicos();
+			$dados['pacientes'] = $this->consulta_model->getPacientes();
+			$dados['formErrors'] = validation_errors();
+
+			$this->montarForm($dados);
+
+		} else {
+
+			$this->consulta_model->atualizar($update_item, $id);
+			redirect(base_url("consultas"));
+		}
 	}
 
 	/**
@@ -84,4 +119,30 @@ class Consultas extends CI_Controller
 		redirect("consultas");
 	}
 
+	/**
+	 * Método retorna o _POST do form e tambem as validacoes configuradas
+	 * @return array
+	 */
+	public function getValidation_item()
+	{
+		$update_item = $_POST;
+
+		$this->form_validation->set_rules("data", "Data", "required",
+			array(
+				'required' => 'Informe a Data da consulta',
+			));
+
+		$this->form_validation->set_rules("hora", "Hora", "required",
+			array(
+				'required' => 'Informe a Hora da consulta',
+			));
+
+		$this->form_validation->set_rules("valor", "Valor", "required|min_length[1]|numeric",
+			array(
+				'required' => 'Informe o valor',
+				'numeric' => 'O campo deve ser numérico',
+			));
+
+		return $update_item;
+	}
 }

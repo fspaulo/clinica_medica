@@ -45,7 +45,7 @@ class Cadastrar extends CI_Controller
 				'min_length' => 'O campo deve possuir mais de 1 digito',
 			));
 
-		if($this->form_validation->run() == false){
+		if ($this->form_validation->run() == false) {
 			$dados['titulo'] = 'Cadastro de Login';
 			$dados['formErrors'] = validation_errors();
 
@@ -54,7 +54,5 @@ class Cadastrar extends CI_Controller
 			$this->usuario_model->salvar($user);
 			redirect("login");
 		}
-
 	}
-
 }

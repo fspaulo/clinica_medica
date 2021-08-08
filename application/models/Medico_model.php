@@ -12,7 +12,16 @@ class Medico_model extends CI_Model
 
 	public function index()
 	{
-		return $this->db->get("medico")->result_array();
+		$this->db->select('m.*, e.nome as especi'); // no html é preciso chamar a var passada no as '***'
+		$this->db->from('medico m');
+		$this->db->join('especialidade e', 'e.id = m.especialidade_id', 'left');
+
+		$query = $this->db->get();
+
+		if($query->num_rows() != 0)
+			return $query->result_array();
+		else
+			return false;
 	}
 
 	/**
@@ -59,15 +68,20 @@ class Medico_model extends CI_Model
 	}
 
 	/**
-	 * Pega especialidades para mostrar em medicos
+	 * Pega especialidades para mostrar em medicos (Editar)
 	 */
 	public function getNomeFromEspecialidade($id)
 	{
-		$this->db->select('especialidade.*');
-		$this->db->from('medico');
-		$this->db->join('especialidade', 'especialidade.id = medico.id');
-		$this->db->where('medico.id',$id);
+		$this->db->select('e.*');
+		$this->db->from('medico m');
+		$this->db->join('especialidade e', 'e.id = m.especialidade_id');
+		$this->db->where('m.id',$id);
 
-		return $this->db->get->row_array();
+		$query = $this->db->get();
+
+		if($query->num_rows() != 0)
+			return $query->row_array();
+		else
+			return false;
 	}
 }

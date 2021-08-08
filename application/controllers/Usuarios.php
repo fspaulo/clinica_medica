@@ -1,12 +1,14 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
+
 /**
  * Controller de Usuários
  */
 class Usuarios extends CI_Controller
 {
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('usuario_model');
 	}
@@ -27,7 +29,8 @@ class Usuarios extends CI_Controller
 	/**
 	 * Abre página para Editar um item
 	 * */
-	public function editar($id){
+	public function editar($id)
+	{
 		$dados['user'] = $this->usuario_model->id_editar($id);
 		$dados['titulo'] = 'Editar Usuário';
 
@@ -54,7 +57,7 @@ class Usuarios extends CI_Controller
 				'min_length' => 'O campo deve possuir mais de 1 digito',
 			));
 
-		if($this->form_validation->run() == false){
+		if ($this->form_validation->run() == false) {
 			$dados['user'] = $this->usuario_model->id_editar($id);
 			$dados['titulo'] = 'Editar Usuário';
 			$dados['formErrors'] = validation_errors();

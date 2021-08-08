@@ -8,9 +8,9 @@
 					</div>
 				<?php endif; ?>
 
-				<?php if (isset($user)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->
+				<?php if (isset($user)) : ?>
 					<form action="<?= site_url() ?>usuarios/update/<?=$user['id']?>" method="post" class="row g-3 m-lg-2">
-      			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
+      			<?php else : ?>
 					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2">
 				<?php endif; ?>
 						<input type="hidden" name="id" value="<?= isset($user) ? $user["id"] : "" ?>">

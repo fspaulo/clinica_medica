@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('usuario_model');
 	}
@@ -23,15 +25,16 @@ class Login extends CI_Controller {
 
 		$user = $this->usuario_model->login($usuario, $senha);
 
-		if($user){
+		if ($user) {
 			$this->session->set_userdata("logado", $user); // seta uma sessão pro usuario
-			redirect("/"); // todo
+			redirect("/");
 		} else {
-			redirect("login"); // todo
+			redirect("login");
 		}
 	}
 
-	public function logout(){
+	public function logout()
+	{
 		$this->session->unset_userdata("logado"); // desliga a sessão
 		redirect("login");
 	}

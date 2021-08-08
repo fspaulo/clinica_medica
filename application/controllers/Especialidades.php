@@ -24,15 +24,23 @@ class Especialidades extends CI_Controller
 	}
 
 	/**
+	 * Metodo responsavel por montar o formulario
+	 */
+	public function montarForm(array $dados)
+	{
+		$this->load->view('header', $dados);
+		$this->load->view('pages/form-especi', $dados);
+		$this->load->view('footer', $dados);
+	}
+
+	/**
 	 * Abre página para cadastrar novo item
 	 * */
 	public function novo()
 	{
 		$dados['titulo'] = 'Nova Especialidade';
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-especi', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -42,13 +50,11 @@ class Especialidades extends CI_Controller
 	{
 		$novo_item = $this->getValidation_item();
 
-		if($this->form_validation->run() == false){
+		if ($this->form_validation->run() == false) {
 			$dados['titulo'] = 'Nova Especialidade';
 			$dados['formErrors'] = validation_errors();
 
-			$this->load->view('header', $dados);
-			$this->load->view('pages/form-especi', $dados);
-			$this->load->view('footer', $dados);
+			$this->montarForm($dados);
 
 		} else {
 			$this->especialidade_model->salvar($novo_item);
@@ -64,9 +70,7 @@ class Especialidades extends CI_Controller
 		$dados['especialidade'] = $this->especialidade_model->id_editar($id);
 		$dados['titulo'] = 'Editar Especialidade';
 
-		$this->load->view('header', $dados);
-		$this->load->view('pages/form-especi', $dados);
-		$this->load->view('footer', $dados);
+		$this->montarForm($dados);
 	}
 
 	/**
@@ -76,14 +80,12 @@ class Especialidades extends CI_Controller
 	{
 		$update_item = $this->getValidation_item();
 
-		if($this->form_validation->run() == false){
+		if ($this->form_validation->run() == false) {
 			$dados['titulo'] = 'Editar Especialidade';
 			$dados['especialidade'] = $this->especialidade_model->id_editar($id);
 			$dados['formErrors'] = validation_errors();
 
-			$this->load->view('header', $dados);
-			$this->load->view('pages/form-especi', $dados);
-			$this->load->view('footer', $dados);
+			$this->montarForm($dados);
 
 		} else {
 			$this->especialidade_model->atualizar($update_item, $id);
@@ -102,7 +104,6 @@ class Especialidades extends CI_Controller
 
 	/**
 	 * Método retorna o _POST do form e tambem as validacoes configuradas
-	 * @return array
 	 */
 	public function getValidation_item()
 	{
@@ -123,5 +124,4 @@ class Especialidades extends CI_Controller
 
 		return $update_item;
 	}
-
 }

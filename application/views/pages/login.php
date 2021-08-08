@@ -16,6 +16,7 @@
 		a {
 			text-decoration: none;
 		}
+
 		.login-page {
 			width: 100%;
 			height: 100vh;
@@ -23,6 +24,7 @@
 			display: flex;
 			align-items: center;
 		}
+
 		.form-right i {
 			font-size: 100px;
 		}
@@ -53,12 +55,15 @@
 										<label for="senha">Senha<span class="text-danger">*</span></label>
 										<div class="input-group">
 											<div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-											<input type="password" name="senha" id="senha" class="form-control" placeholder="Entre com a senha" required>
+											<input type="password" name="senha" id="senha" class="form-control"
+												   placeholder="Entre com a senha" required>
 										</div>
 									</div>
 
 									<div class="col-sm-6">
-										<a href="<?php base_url() ?>cadastrar" class="float-end text-primary">Criar uma nova conta?</a>
+										<a href="<?php base_url() ?>cadastrar" class="float-end text-primary">
+											Criar uma nova conta?
+										</a>
 									</div>
 
 									<div class="col-12">

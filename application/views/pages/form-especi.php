@@ -11,7 +11,7 @@
 				<?php if (isset($especialidade)) : ?> <!-- Se possui a variavel $especialidade, atualiza -->
 					<form action="<?= site_url() ?>especialidades/update/<?=$especialidade['id']?>" method="post" class="row g-3 m-lg-2">
       			<?php else : ?> <!-- Se possui a variavel $especialidade, abre novo -->
-					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2"><!-- <=//php base_url() ?>especialidades/salvar-->
+					<form action="<?php base_url() ?>insert" method="post" class="row g-3 m-lg-2">
 				<?php endif; ?>
 						<input type="hidden" name="id" value="<?= isset($especialidade) ? $especialidade["id"] : "" ?>">
 						<div class="col-md-5">

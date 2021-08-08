@@ -28,7 +28,7 @@
 					<td><?= $m['id'] ?></td>
 					<td><?= $m['crm'] ?></td>
 					<td><?= $m['nome'] ?></td>
-					<td><?= $m['especialidade_id'] ?></td>
+					<td><?= $m['especi'] ?></td>
 					<td><?= $m['telefone'] ?></td>
 					<td>
 						<a href="<?php base_url() ?>medicos/editar/<?= $m['id'] ?>"
