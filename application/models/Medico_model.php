@@ -18,7 +18,7 @@ class Medico_model extends CI_Model
 
 		$query = $this->db->get();
 
-		if($query->num_rows() != 0)
+		if ($query->num_rows() != 0)
 			return $query->result_array();
 		else
 			return false;
@@ -55,8 +55,11 @@ class Medico_model extends CI_Model
 	 */
 	function delete($id)
 	{
-		$this->db->where("id", $id);
-		return $this->db->delete('medico');
+		if ($this->validarDelete($id)) {
+			$this->db->where("id", $id);
+			return $this->db->delete('medico');
+		} else
+			return false;
 	}
 
 	/**
@@ -75,13 +78,27 @@ class Medico_model extends CI_Model
 		$this->db->select('e.*');
 		$this->db->from('medico m');
 		$this->db->join('especialidade e', 'e.id = m.especialidade_id');
-		$this->db->where('m.id',$id);
+		$this->db->where('m.id', $id);
 
 		$query = $this->db->get();
 
-		if($query->num_rows() != 0)
+		if ($query->num_rows() != 0)
 			return $query->row_array();
 		else
 			return false;
+	}
+
+	public function validarDelete($id)
+	{
+		$this->db->select('*');
+		$this->db->from('consulta c');
+		$this->db->where('c.medico_id', $id);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() != 0)
+			return false; // possui registros
+		else
+			return true; // não possui registros, pode exluir
 	}
 }

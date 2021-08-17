@@ -1,6 +1,12 @@
 <div class="row justify-content-center">
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-8 px-4">
 
+		<?php if (isset($error)) : ?>
+			<div class="alert alert-warning mb-3" role="alert">
+				<span><?= $error ?></span>
+			</div>
+		<?php endif; ?>
+
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
 			<h2 class="h2">Pacientes</h2>
 			<div class="btn-toolbar mb-2 mb-md-0">

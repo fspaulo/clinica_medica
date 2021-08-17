@@ -19,7 +19,7 @@
 						<input type="hidden" name="id" value="<?= isset($medico) ? $medico["id"] : "" ?>">
 						<div class="col-md-5">
 							<label for="crm" class="form-label">CRM</label>
-							<input type="text" class="form-control" placeholder="xxx.xxx.xxx-xx" id="crm" name="crm"
+							<input type="text" class="form-control" placeholder="xxxxxxxx" id="crm" name="crm"
 								   value="<?= isset($medico) ? $medico["crm"] : set_value('crm') ?>">
 						</div>
 						<div class="col-7">

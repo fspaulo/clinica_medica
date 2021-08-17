@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Paciente_model extends CI_Model{
+class Paciente_model extends CI_Model
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 	}
 
@@ -45,8 +47,25 @@ class Paciente_model extends CI_Model{
 	 */
 	function delete($id)
 	{
-		$this->db->where("id", $id);
-		return $this->db->delete('paciente');
+		if ($this->validarDelete($id)) {
+			$this->db->where("id", $id);
+			return $this->db->delete('paciente');
+		} else
+			return false;
+	}
+
+	public function validarDelete($id)
+	{
+		$this->db->select('*');
+		$this->db->from('consulta c');
+		$this->db->where('c.paciente_id', $id);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() != 0)
+			return false; // possui registros
+		else
+			return true; // não possui registros, pode exluir
 	}
 
 }

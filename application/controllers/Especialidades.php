@@ -17,7 +17,14 @@ class Especialidades extends CI_Controller
 
 		$dados['especialidades'] = $this->especialidade_model->index();
 		$dados['titulo'] = 'Especialidades';
+		$this->buildMainScreen($dados);
+	}
 
+	/**
+	 * Metodo responsavel por montar a tabela
+	 */
+	public function buildMainScreen(array $dados)
+	{
 		$this->load->view('header', $dados);
 		$this->load->view('pages/especialidades', $dados);
 		$this->load->view('footer', $dados);
@@ -98,8 +105,18 @@ class Especialidades extends CI_Controller
 	 * */
 	public function deletar($id)
 	{
-		$this->especialidade_model->delete($id);
+		$valido = $this->especialidade_model->delete($id);
+
+		$dados['especialidades'] = $this->especialidade_model->index();
+		$dados['titulo'] = 'Especialidades';
+
+		if(!$valido) { // se não for valido, add msg erro
+			$dados['error'] = "Especialidade vinculada a um Médico";
+			$this->buildMainScreen($dados);
+			return false;
+		}
 		redirect("especialidades");
+		return true;
 	}
 
 	/**

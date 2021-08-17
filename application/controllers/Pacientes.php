@@ -19,6 +19,14 @@ class Pacientes extends CI_Controller
 		$dados['pacientes'] = $this->paciente_model->index();
 		$dados['titulo'] = 'Pacientes';
 
+		$this->buildMainScreen($dados);
+	}
+
+	/**
+	 * Metodo responsavel por montar a tabela
+	 */
+	public function buildMainScreen(array $dados)
+	{
 		$this->load->view('header', $dados);
 		$this->load->view('pages/pacientes', $dados);
 		$this->load->view('footer', $dados);
@@ -101,8 +109,18 @@ class Pacientes extends CI_Controller
 	 * */
 	public function deletar($id)
 	{
-		$this->paciente_model->delete($id);
-		redirect("pacientes"); // todo
+		$valido = $this->paciente_model->delete($id);
+
+		$dados['pacientes'] = $this->paciente_model->index();
+		$dados['titulo'] = 'Pacientes';
+
+		if (!$valido) {
+			$dados['error'] = "Paciente vinculado a uma Consulta";
+			$this->buildMainScreen($dados);
+			return false;
+		}
+		redirect("pacientes");
+		return true;
 	}
 
 	/**

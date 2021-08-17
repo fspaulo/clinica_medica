@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Medicos extends CI_Controller
 {
@@ -18,6 +18,14 @@ class Medicos extends CI_Controller
 		$dados['medicos'] = $this->medico_model->index();
 		$dados['titulo'] = 'Médicos';
 
+		$this->buildMainScreen($dados);
+	}
+
+	/**
+	 * Metodo responsavel por montar a tabela
+	 */
+	public function buildMainScreen(array $dados)
+	{
 		$this->load->view('header', $dados);
 		$this->load->view('pages/medicos', $dados);
 		$this->load->view('footer', $dados);
@@ -106,8 +114,18 @@ class Medicos extends CI_Controller
 	 * */
 	public function deletar($id)
 	{
-		$this->medico_model->delete($id);
-		redirect("medicos"); // todo
+		$valido = $this->medico_model->delete($id);
+
+		$dados['medicos'] = $this->medico_model->index();
+		$dados['titulo'] = 'Médicos';
+
+		if(!$valido) { // se não for valido, add msg erro
+			$dados['error'] = "Médico vinculado a uma Consulta";
+			$this->buildMainScreen($dados);
+			return false;
+		}
+		redirect("medicos");
+		return true;
 	}
 
 	/**
@@ -117,11 +135,11 @@ class Medicos extends CI_Controller
 	{
 		$update_item = $_POST;
 
-		$this->form_validation->set_rules("crm", "CRM", "trim|required|min_length[11]|max_length[11]",
+		$this->form_validation->set_rules("crm", "CRM", "trim|required|min_length[8]|max_length[8]",
 			array(
 				'required' => 'Informe o CRM',
-				'min_length' => 'O CRM deve possuir 11 digitos',
-				'max_length' => 'O CRM deve possuir 11 digitos',
+				'min_length' => 'O CRM deve possuir 8 digitos',
+				'max_length' => 'O CRM deve possuir 8 digitos',
 			));
 
 		$this->form_validation->set_rules("nome", "Nome", "trim|required|min_length[2]",
@@ -137,4 +155,5 @@ class Medicos extends CI_Controller
 
 		return $update_item;
 	}
+
 }

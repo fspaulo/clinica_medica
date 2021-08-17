@@ -46,8 +46,25 @@ class Especialidade_model extends CI_Model
 	 */
 	function delete($id)
 	{
-		$this->db->where("id", $id);
-		return $this->db->delete('especialidade');
+		if ($this->validarDelete($id)) {
+			$this->db->where("id", $id);
+			return $this->db->delete('especialidade');
+		} else
+			return false;
+	}
+
+	public function validarDelete($id)
+	{
+		$this->db->select('*');
+		$this->db->from('medico m');
+		$this->db->where('m.especialidade_id', $id);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() != 0)
+			return false; // possui registros
+		else
+			return true; // não possui registros, pode exluir
 	}
 
 }
