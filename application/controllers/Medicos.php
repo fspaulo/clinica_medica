@@ -129,6 +129,18 @@ class Medicos extends CI_Controller
 	}
 
 	/**
+	 * Busca por nome do medico ou especialidade
+	 */
+	public function pesquisar()
+	{
+		$dados["titulo"] = "Pesquisa por *" . $_POST["busca"] . "*";
+		$dados["medicos"] = $this->medico_model->buscar($_POST);
+
+		$this->buildMainScreen($dados);
+	}
+
+
+	/**
 	 * Método retorna o _POST do form e tambem as validacoes configuradas
 	 */
 	public function getValidation_item()

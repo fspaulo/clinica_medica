@@ -124,6 +124,17 @@ class Pacientes extends CI_Controller
 	}
 
 	/**
+	* Busca por nome do paciente
+	 */
+	public function pesquisar()
+	{
+		$dados["titulo"] = "Pesquisa por *" . $_POST["busca"] . "*";
+		$dados["pacientes"] = $this->paciente_model->buscar($_POST);
+
+		$this->buildMainScreen($dados);
+	}
+
+	/**
 	 * Método retorna o _POST do form e tambem as validacoes configuradas
 	 * @return array
 	 */

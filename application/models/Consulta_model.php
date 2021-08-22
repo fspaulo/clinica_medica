@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Consulta_model extends CI_Model
 {
@@ -12,14 +12,14 @@ class Consulta_model extends CI_Model
 
 	public function index()
 	{
-		$this->db->select('c.*, m.nome as medico, p.nome as paciente'); // no html é preciso chamar a var passada no as '***'
+		$this->db->select('c.*, m.nome as medico, p.nome as paciente');
 		$this->db->from('consulta c');
 		$this->db->join('medico m', 'm.id = c.medico_id', 'left');
 		$this->db->join('paciente p', 'p.id = c.paciente_id', 'left');
 
 		$query = $this->db->get();
 
-		if($query->num_rows() != 0)
+		if ($query->num_rows() != 0)
 			return $query->result_array();
 		else
 			return false;
@@ -76,11 +76,11 @@ class Consulta_model extends CI_Model
 		$this->db->select('m.id as id, m.nome as nome');
 		$this->db->from('consulta c');
 		$this->db->join('medico m', 'm.id = c.medico_id', 'left');
-		$this->db->where('c.id',$id);
+		$this->db->where('c.id', $id);
 
 		$query = $this->db->get();
 
-		if($query->num_rows() != 0)
+		if ($query->num_rows() != 0)
 			return $query->row_array();
 		else
 			return false;
@@ -102,14 +102,32 @@ class Consulta_model extends CI_Model
 		$this->db->select('p.id as id, p.nome as nome');
 		$this->db->from('consulta c');
 		$this->db->join('paciente p', 'p.id = c.paciente_id', 'left');
-		$this->db->where('c.id',$id);
+		$this->db->where('c.id', $id);
 
 		$query = $this->db->get();
 
-		if($query->num_rows() != 0)
+		if ($query->num_rows() != 0)
 			return $query->row_array();
 		else
 			return false;
+	}
+
+	public function buscar($busca)
+	{
+		if (empty($busca)) {
+			return array();
+		}
+
+		$busca = $this->input->post('busca');
+
+		$this->db->distinct('');
+		$this->db->select('c.*, m.nome as medico, p.nome as paciente');
+		$this->db->from('consulta c');
+		$this->db->join('medico m', 'm.id = c.medico_id', 'left');
+		$this->db->join('paciente p', 'p.id = c.paciente_id', 'left');
+		$this->db->where("(m.nome LIKE '%" . $busca . "%' or p.nome LIKE '%" . $busca . "%')");
+
+		return $this->db->get("consulta")->result_array();
 	}
 
 }

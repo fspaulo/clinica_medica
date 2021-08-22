@@ -120,6 +120,19 @@ class Consultas extends CI_Controller
 	}
 
 	/**
+	 * Busca por nome do paciente ou medico
+	 */
+	public function pesquisar()
+	{
+		$dados["titulo"] = "Pesquisa por *" . $_POST["busca"] . "*";
+		$dados['consultas'] = $this->consulta_model->buscar($_POST);
+
+		$this->load->view('header', $dados);
+		$this->load->view('pages/consultas', $dados);
+		$this->load->view('footer', $dados);
+	}
+
+	/**
 	 * Método retorna o _POST do form e tambem as validacoes configuradas
 	 * @return array
 	 */

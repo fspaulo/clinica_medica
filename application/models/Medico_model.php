@@ -101,4 +101,22 @@ class Medico_model extends CI_Model
 		else
 			return true; // não possui registros, pode exluir
 	}
+
+	public function buscar($busca)
+	{
+		if (empty($busca)) {
+			return array();
+		}
+
+		$busca = $this->input->post('busca');
+
+		$this->db->distinct('m.nome, e.nome');
+		$this->db->select('m.*, e.nome as especi');
+		$this->db->from('medico m');
+		$this->db->join('especialidade e', 'e.id = m.especialidade_id', '');
+		$this->db->where("(m.nome LIKE '%" . $busca . "%' or e.nome LIKE '%" . $busca . "%')");
+
+		return $this->db->get("medico")->result_array();
+	}
+
 }

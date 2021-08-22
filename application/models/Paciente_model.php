@@ -68,4 +68,15 @@ class Paciente_model extends CI_Model
 			return true; // não possui registros, pode exluir
 	}
 
+	public function buscar($busca)
+	{
+		if (empty($busca)) {
+			return array();
+		}
+
+		$busca = $this->input->post('busca');
+		$this->db->like('nome', $busca);
+		return $this->db->get("paciente")->result_array();
+	}
+
 }
